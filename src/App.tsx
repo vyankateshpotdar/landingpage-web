@@ -1,115 +1,139 @@
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { ArrowDown, ArrowUpRight, ChevronRight, Mail, Menu, MessageCircle, Plus, X } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { motion } from 'motion/react';
+import { ArrowUpRight, Mail, Phone, MessageCircle } from 'lucide-react';
 
-export const SITE = {
-  name: 'YOUR NAME',
-  role: 'Web Developer & Designer',
-  email: 'YOUR_EMAIL@example.com',
-  whatsapp: 'YOUR_WHATSAPP_NUMBER',
-  whatsappMessage: 'Hi, I found your website and would like to discuss a project.',
-  location: 'India',
-}
+const CONTACT = {
+  name: 'Vyankatesh Potdar',
+  email: 'vyankateshpotdar411@gmail.com',
+  phoneDisplay: '+91 86249 84049',
+  phoneHref: 'tel:+918624984049',
+  whatsapp: 'https://wa.me/918624984049',
+};
 
-const SERVICES = [
-  ['01', 'Websites', 'Distinctive, responsive sites with a strong point of view.'],
-  ['02', 'Landing Pages', 'Focused digital launches built to make an impression.'],
-  ['03', 'Redesigns', 'A sharper digital presence for what you have already built.'],
-  ['04', 'Frontend Build', 'Thoughtful interfaces, made real with precise implementation.'],
-]
+const LINK_COLUMNS = [
+  {
+    heading: 'Services',
+    links: ['Websites', 'Landing Pages', 'Redesigns', 'Frontend Build'],
+  },
+  {
+    heading: 'Studio',
+    links: ['About', 'Selected Work', 'Process', 'Testimonials'],
+  },
+];
 
-const PROJECTS = ['YOUR PROJECT', 'YOUR PROJECT', 'YOUR PROJECT']
-const ease = [0.22, 1, 0.36, 1] as const
-
-function useEscape(onEscape: () => void, isOpen: boolean) {
-  useEffect(() => {
-    if (!isOpen) return
-    const onKeyDown = (event: KeyboardEvent) => event.key === 'Escape' && onEscape()
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [isOpen, onEscape])
-}
-
-function ContactLinks({ compact = false }: { compact?: boolean }) {
-  const whatsappUrl = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.whatsappMessage)}`
+export default function App() {
   return (
-    <div className={compact ? 'flex gap-2' : 'flex flex-wrap items-center gap-3'}>
-      <a className={compact ? 'icon-link' : 'contact-link'} href={`mailto:${SITE.email}`} aria-label="Email me">
-        <Mail size={compact ? 16 : 17} /><span>{compact ? 'Email' : 'Email Me'}</span>
-      </a>
-      <a className={compact ? 'icon-link' : 'contact-link'} href={whatsappUrl} target="_blank" rel="noreferrer" aria-label="Message me on WhatsApp">
-        <MessageCircle size={compact ? 16 : 17} /><span>{compact ? 'WhatsApp' : 'WhatsApp Me'}</span>
-      </a>
-    </div>
-  )
-}
+    <main className="relative w-full min-h-[115vh] overflow-x-hidden flex flex-col items-center font-sans selection:bg-white/20 selection:text-white">
+      {/* Immersive background video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="fixed inset-0 w-full h-full object-cover z-[0]"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_114316_1c7889ad-2885-410e-b493-98119fee0ddb.mp4"
+      />
 
-function ContactOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const trigger = useRef<HTMLButtonElement | null>(null)
-  const panel = useRef<HTMLDivElement | null>(null)
-  useEscape(onClose, open)
-  useEffect(() => {
-    if (!open) return
-    const previous = document.activeElement as HTMLElement | null
-    panel.current?.focus()
-    return () => previous?.focus()
-  }, [open])
-  return <AnimatePresence>
-    {open && <motion.div className="fixed inset-0 z-50 grid place-items-center bg-black/72 px-5 backdrop-blur-md" onMouseDown={(e) => e.target === e.currentTarget && onClose()} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <motion.div ref={panel} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="contact-title" className="liquid-glass contact-panel" initial={{ opacity: 0, y: 22, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 16, scale: 0.98 }} transition={{ duration: 0.35, ease }}>
-        <button ref={trigger} onClick={onClose} className="close-button" aria-label="Close contact dialog"><X size={18} /></button>
-        <p className="eyebrow">DIRECT CONTACT</p>
-        <h2 id="contact-title">LET&apos;S BUILD<br />SOMETHING.</h2>
-        <p className="modal-copy">Tell me what you&apos;re working on. I&apos;d love to hear the shape of the idea.</p>
-        <ContactLinks />
-        <div className="availability-list"><span>Available for</span><p>Websites · Landing Pages · Redesigns<br />Frontend Development · Custom Experiences</p></div>
-      </motion.div>
-    </motion.div>}
-  </AnimatePresence>
-}
+      {/* Content wrapper */}
+      <div className="relative z-10 w-full max-w-7xl px-6 md:px-10 flex flex-col justify-between min-h-[115vh] pt-20 md:pt-28 pb-8">
+        {/* Upper CTA */}
+        <motion.section
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: 'easeOut' }}
+          className="w-full flex flex-col items-center text-center"
+        >
+          <span className="text-[11px] uppercase tracking-[0.35em] text-white/60 mb-6">
+            Web Developer &amp; Designer
+          </span>
+          <h1 className="text-white text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight">
+            Websites that make an impression.
+          </h1>
+          <p className="mt-6 text-white/70 text-base leading-relaxed max-w-md">
+            I design and build fast, refined digital experiences that turn visitors into customers. Let&apos;s create something worth remembering.
+          </p>
+          <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <a
+              href={`mailto:${CONTACT.email}`}
+              className="shrink-0 inline-flex items-center justify-center gap-2 rounded-full bg-neutral-800/90 px-6 py-3 text-sm text-white transition-colors hover:bg-neutral-700"
+            >
+              Get in Touch
+              <ArrowUpRight size={15} />
+            </a>
+            <a
+              href={CONTACT.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="liquid-glass shrink-0 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm text-white transition-transform hover:-translate-y-0.5"
+            >
+              <MessageCircle size={15} />
+              WhatsApp
+            </a>
+          </div>
+        </motion.section>
 
-function Header({ onContact }: { onContact: () => void }) {
-  const [open, setOpen] = useState(false)
-  const menuPanel = useRef<HTMLDivElement>(null)
-  useEscape(() => setOpen(false), open)
-  const nav = (className = '') => <nav className={className} aria-label="Primary navigation">
-    {['Work', 'Services', 'About'].map((item) => <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setOpen(false)}>{item}</a>)}
-    <button onClick={() => { setOpen(false); onContact() }}>Contact</button>
-  </nav>
-  return <>
-    <header className="header-wrap"><a className="brand" href="#top" aria-label={`${SITE.name} home`}><span className="brand-mark">Y</span><span>{SITE.name}</span></a>{nav('desktop-nav')}<button className="menu-button" aria-label="Open navigation menu" aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen(true)}><Menu size={21} /></button></header>
-    <AnimatePresence>{open && <motion.div className="mobile-menu-backdrop" onMouseDown={(e) => e.target === e.currentTarget && setOpen(false)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <motion.div ref={menuPanel} id="mobile-menu" className="liquid-glass mobile-menu" initial={{ y: 26, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 18, opacity: 0 }} transition={{ duration: 0.3, ease }}>
-        <button className="close-button" onClick={() => setOpen(false)} aria-label="Close navigation menu"><X size={19} /></button>
-        {nav('mobile-nav')}
-        <button className="mobile-project" onClick={() => { setOpen(false); onContact() }}>Start a Project <ArrowUpRight size={18} /></button>
-      </motion.div>
-    </motion.div>}</AnimatePresence>
-  </>
-}
+        {/* Footer pushed to bottom */}
+        <motion.footer
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.4, ease: 'easeOut' }}
+          className="liquid-glass w-full rounded-3xl p-6 md:p-10 text-white/70 mt-32 md:mt-64"
+        >
+          {/* Top grid */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 mb-10">
+            <div className="md:col-span-5">
+              <div className="flex items-center gap-3 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256" fill="currentColor"><path d="M 4.688 136 C 68.373 136 120 187.627 120 251.312 C 120 252.883 119.967 254.445 119.905 256 L 0 256 L 0 136.096 C 1.555 136.034 3.117 136 4.688 136 Z M 251.312 136 C 252.883 136 254.445 136.034 256 136.096 L 256 256 L 136.095 256 C 136.032 254.438 136.001 252.875 136 251.312 C 136 187.627 187.627 136 251.312 136 Z M 119.905 0 C 119.967 1.555 120 3.117 120 4.688 C 120 68.373 68.373 120 4.687 120 C 3.117 120 1.555 119.967 0 119.905 L 0 0 Z M 256 119.905 C 254.445 119.967 252.883 120 251.312 120 C 187.627 120 136 68.373 136 4.687 C 136 3.117 136.033 1.555 136.095 0 L 256 0 Z" /></svg>
+                <span className="text-xl font-medium">{CONTACT.name.toUpperCase()}</span>
+              </div>
+              <p className="text-sm leading-relaxed max-w-sm mt-5">
+                Freelance web developer &amp; designer crafting high-performance websites and landing pages that help brands stand out and grow.
+              </p>
+            </div>
 
-function App() {
-  const [contactOpen, setContactOpen] = useState(false)
-  const reduceMotion = useReducedMotion()
-  return <main id="top" className="relative flex min-h-screen w-full flex-col items-center overflow-x-hidden bg-black font-sans text-white selection:bg-white/20 selection:text-white">
-    <video autoPlay loop muted playsInline className="fixed inset-0 z-0 h-full w-full object-cover pointer-events-none" aria-hidden="true"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_114316_1c7889ad-2885-410e-b493-98119fee0ddb.mp4" type="video/mp4" /></video>
-    <div className="video-scrim" aria-hidden="true" />
-    <div className="relative z-10 w-full max-w-[1680px] px-5 sm:px-8 lg:px-12"><Header onContact={() => setContactOpen(true)} />
-      <section className="hero" aria-label="Introduction">
-        <motion.div className="availability" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7, ease }}><i /> Available for new projects</motion.div>
-        <motion.h1 initial={{ opacity: 0, y: reduceMotion ? 0 : 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22, duration: 0.85, ease }}>I BUILD<br /><span>DIGITAL EXPERIENCES</span><br />THAT FEEL DIFFERENT.</motion.h1>
-        <motion.div className="hero-bottom" initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45, duration: 0.75, ease }}>
-          <div><p className="intro">I design and build modern websites for brands, startups and ambitious ideas.</p><p className="process">Strategy <b>→</b> Design <b>→</b> Development <b>→</b> Launch</p></div>
-          <div className="hero-actions"><motion.button type="button" className="primary-button" onClick={() => setContactOpen(true)} whileHover={reduceMotion ? undefined : { y: -3, scale: 1.02 }} whileTap={{ scale: 0.98 }}>Start a Project <ArrowUpRight size={18} /></motion.button><ContactLinks /></div>
-        </motion.div>
-        <a className="scroll-cue" href="#services" aria-label="Scroll to services"><ArrowDown size={17} /><span>Scroll to explore</span></a>
-      </section>
-    </div>
-    <section id="services" className="content-section relative z-10"><div className="section-head"><p className="eyebrow">WHAT I BUILD</p><h2>Clear thinking.<br />Carefully made.</h2><p>I help ideas make their best first impression online.</p></div><div className="service-list">{SERVICES.map(([number, title, detail]) => <motion.div className="service-row" key={number} whileHover={reduceMotion ? undefined : { x: 7 }}><span>{number}</span><h3>{title}</h3><p>{detail}</p><ArrowUpRight size={18} /></motion.div>)}</div></section>
-    <section id="work" className="work-section relative z-10"><div className="work-top"><div><p className="eyebrow">SELECTED WORK</p><h2>Future-facing,<br />by design.</h2></div><p>A home for considered digital work.<br />Projects coming soon.</p></div><div className="project-grid">{PROJECTS.map((project, index) => <article className="project" key={index}><div className="project-visual"><span>0{index + 1}</span><Plus size={20} /></div><div className="project-label"><span>Project 0{index + 1}</span><h3>{project}</h3></div></article>)}</div></section>
-    <footer id="about" className="liquid-glass footer relative z-10"><motion.div initial={{ opacity: 0, y: reduceMotion ? 0 : 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 1, delay: 0.1, ease }} className="footer-grid"><div className="footer-intro"><a className="brand" href="#top"><span className="brand-mark">Y</span><span>{SITE.name}</span></a><p className="footer-role">{SITE.role}</p><p>I design and build modern websites for people and businesses that care about how they show up online.</p></div><div><p className="eyebrow">NAVIGATION</p><div className="footer-links"><a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a><button onClick={() => setContactOpen(true)}>Contact</button></div></div><div><p className="eyebrow">LET&apos;S TALK</p><ContactLinks compact /><p className="footer-location">Based in {SITE.location}<br />Working globally</p></div></motion.div><div className="footer-bottom"><span>© {new Date().getFullYear()} {SITE.name}</span><span>Independent digital studio</span></div></footer>
-    <ContactOverlay open={contactOpen} onClose={() => setContactOpen(false)} />
-  </main>
-}
+            {/* Links section */}
+            <div className="md:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-8">
+              {LINK_COLUMNS.map(col => (
+                <div key={col.heading}>
+                  <h3 className="text-sm uppercase tracking-wider text-white font-medium mb-4">{col.heading}</h3>
+                  <ul className="text-xs space-y-2">
+                    {col.links.map(link => (
+                      <li key={link}>
+                        <a href="#" className="hover:text-white transition-colors">{link}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+              <div>
+                <h3 className="text-sm uppercase tracking-wider text-white font-medium mb-4">Contact</h3>
+                <ul className="text-xs space-y-2">
+                  <li>
+                    <a href={`mailto:${CONTACT.email}`} className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                      <Mail size={13} /> {CONTACT.email}
+                    </a>
+                  </li>
+                  <li>
+                    <a href={CONTACT.phoneHref} className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                      <Phone size={13} /> {CONTACT.phoneDisplay}
+                    </a>
+                  </li>
+                  <li>
+                    <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                      <MessageCircle size={13} /> WhatsApp
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-export default App
+          {/* Bottom bar */}
+          <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
+            <p className="text-[10px] uppercase tracking-widest opacity-50">© {new Date().getFullYear()} {CONTACT.name}. All rights reserved.</p>
+            <p className="text-[10px] uppercase tracking-widest opacity-50">Available for new projects</p>
+          </div>
+        </motion.footer>
+      </div>
+    </main>
+  );
+}
